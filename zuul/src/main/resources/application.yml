@@ -1,0 +1,15 @@
+# 基础信息配置
+spring:
+  application:
+    name: zuul
+server:
+  port: 9090
+eureka:
+  client:
+    enabled: true #是否启动eureka客户端，本地调试时可以改为false,这样会更快
+    registerWithEureka: true
+    service-url:
+      defaultZone: http://localhost:20001/eureka/
+    instance:
+      leaseRenewalIntervalInSeconds: 30 #服务续约时间，默认就是30s
+      leaseExpirationDurationInSeconds: 90 #服务时效时间，缺省为90秒服务端接收不到客户端的心跳，则剔除该客户端服务实例

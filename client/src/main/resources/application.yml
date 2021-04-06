@@ -1,0 +1,86 @@
+spring:
+  application:
+    name: product
+  profiles:
+    # 默认获取配置中心local配置，获取不到调用本地的application-local
+    # 服务器部署会重置该参数
+    active: product1
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+rocketmq:
+  name-server: 47.103.28.66:9876
+  # 纯消费者不需要以下配置
+  producer:
+    group: test-group
+apache:
+  rocketmq:
+    name-server: 47.103.28.66:9876
+    producer:
+      topic: testTopic1
+      maxMessageSize: 40960
+      sendMsgTimeout: 30000
+      retryTimesWhenSendFailed: 2
+      algorithm:
+        producerGroup: algorithm-api
+        comsumerGroup: algorithm-api1
+    consumer:
+      topic: testTopic1
+      tag: testTag
+      consumeMessageBatchMaxSize: 3
+      consumeThreadMin: 20
+      consumeThreadMax: 64
+---
+spring:
+  application:
+    name: product
+  profiles: product1
+eureka:
+  client:
+    enabled: true #是否启动eureka客户端，本地调试时可以改为false,这样会更快
+    registerWithEureka: true
+    service-url:
+      defaultZone: http://localhost:20001/eureka/,http://localhost:20002/eureka/
+    instance:
+      leaseRenewalIntervalInSeconds: 30 #服务续约时间，默认就是30s
+      leaseExpirationDurationInSeconds: 90 #服务时效时间，缺省为90秒服务端接收不到客户端的心跳，则剔除该客户端服务实例
+
+server:
+  port: 8081
+
+---
+spring:
+  application:
+    name: product
+  profiles: product2
+eureka:
+  client:
+    enabled: true #是否启动eureka客户端，本地调试时可以改为false,这样会更快
+    registerWithEureka: true
+    service-url:
+      defaultZone: http://localhost:20001/eureka/,http://localhost:20002/eureka/
+    instance:
+      leaseRenewalIntervalInSeconds: 30 #服务续约时间，默认就是30s
+      leaseExpirationDurationInSeconds: 90 #服务时效时间，缺省为90秒服务端接收不到客户端的心跳，则剔除该客户端服务实例
+server:
+  port: 8082
+
+---
+
+spring:
+  application:
+    name: consumer
+  profiles: consume
+eureka:
+  client:
+    enabled: true #是否启动eureka客户端，本地调试时可以改为false,这样会更快
+    registerWithEureka: true
+    service-url:
+      defaultZone: http://localhost:20001/eureka/,http://localhost:20002/eureka/
+    instance:
+      leaseRenewalIntervalInSeconds: 30 #服务续约时间，默认就是30s
+      leaseExpirationDurationInSeconds: 90 #服务时效时间，缺省为90秒服务端接收不到客户端的心跳，则剔除该客户端服务实例
+server:
+  port: 8083

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- scan 配置文件如果发生改变，将会被重新加载  scanPeriod 检测间隔时间-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!--引入默认配置-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <springProperty name="LOG_PATH" source="logging.file.path"/>
+    <!-- 业务监控 -->
+    <!-- %d:时间 %level:日志级别 %t:线程名 %marker:标签 %F：调用logger的源文件名 %L:代码行数 %M:方法名 %msg:日志内容 %n:换行  -->
+    <property name="MONITOR_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{32}.%M:%L [%t] %marker %msg%n"/>
+
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} [%15.15t] [ %40.40C{2}:%6.6L] [%tid] : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <contextName>knowledge-base-log</contextName>
+
+    <logger name="biz"  level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- Spring日志级别控制  -->
+    <logger name="org.springframework" level="warn"  additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <jmxConfigurator/>
+</configuration>
