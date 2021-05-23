@@ -17,21 +17,21 @@ rocketmq:
     group: test-group
 apache:
   rocketmq:
-    name-server: 47.103.28.66:9876
+    name-server: mq101.dian-stable.com:9876;mq102.dian-stable.com:9876
+    tag: testTag
     producer:
-      topic: testTopic1
+      topic: aileRocketMq
       maxMessageSize: 40960
       sendMsgTimeout: 30000
       retryTimesWhenSendFailed: 2
-      algorithm:
-        producerGroup: algorithm-api
-        comsumerGroup: algorithm-api1
+      producerGroup: aile-apiPro
     consumer:
-      topic: testTopic1
-      tag: testTag
+      consumerGroup: aile-apiCom
+      topic: aileRocketMq
       consumeMessageBatchMaxSize: 3
       consumeThreadMin: 20
       consumeThreadMax: 64
+suffix: alter-529189847965904896
 ---
 spring:
   application:

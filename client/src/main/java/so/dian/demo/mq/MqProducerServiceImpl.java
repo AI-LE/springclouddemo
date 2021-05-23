@@ -34,12 +34,13 @@ public class MqProducerServiceImpl {
 
     @Value("${apache.rocketmq.producer.topic}")
     private String topic;
-    private static final String TAG_SOCKET_MSG = "testTag";
+    @Value("${apache.rocketmq.tag}")
+    private String tag;
 
     public String sendSocketMsg(MessageDto obj){
         try {
             Message msg;
-            msg = new Message(topic, TAG_SOCKET_MSG, JSONObject.toJSONBytes(obj));
+            msg = new Message(topic, tag, JSONObject.toJSONBytes(obj));
             msg.putUserProperty("request-id", UUID.randomUUID().toString().replace("-", ""));
 //            log.info("MQ请求参数：" + JsonUtils.beanToJson(obj));
             SendResult sendResult = producer.send(msg);
