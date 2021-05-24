@@ -21,7 +21,8 @@ public class MQConsumeMsgListenerProcessor implements MessageListenerConcurrentl
  
     @Value("${apache.rocketmq.consumer.topic}")
     private String topic;
-    private static String TAG_SOCKET_MSG = "testTag";
+    @Value("${apache.rocketmq.tag}")
+    private String TAG_SOCKET_MSG;
 
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
